@@ -10,10 +10,12 @@ site.table <- read_html("https://www.worldometers.info/coronavirus/") %>%
 site.table %>% 
   filter(`Country,Other` %in% c("Portugal", "Spain", "Italy", "France", "USA")) %>%
   select(`Country,Other`, TotalCases, TotalRecovered, TotalDeaths, `Tot Cases/1M pop`, `Deaths/1M pop`) %>% 
-  print(.) 
+  print() 
 
-site.table%>% 
-  ggplot(., aes(TotalCases, TotalDeaths)) + 
+site.table%>%   
+  filter(`Country,Other` %in% c("Portugal", "Spain", "Italy", "France", "USA")) %>%
+  select(`Country,Other`, TotalCases, TotalRecovered, TotalDeaths, `Tot Cases/1M pop`, `Deaths/1M pop`) %>% 
+  ggplot(., aes(TotalCases, TotalDeaths, colour = `Country,Other`)) + 
   geom_point() +
   stat_smooth(method = "lm")
   
